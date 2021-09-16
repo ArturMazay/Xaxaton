@@ -7,22 +7,20 @@ class NetworkRepository(val iLoadDataFromNetwork: ILoadDataFromNetwork) : ILoadD
 
 
     private fun mapData(networkModel: NetworkModel): ModelDomain {
-        return ModelDomain(data = networkModel.data.let { networkData ->
-            DataDomain(places = networkModel.data?.places?.map { places ->
-                PlacesItemDomain(
-                    id = places?.id,
-                    address = places?.address,
-                    lat = places?.lat,
-                    city = places?.city,
-                    district = places?.district,
-                    name = places?.name,
-                    workHours = places?.workHours,
-                    categories = places?.categories?.map { },
-                    region = places?.region,
-                    lng = places?.lat
-                )
-            }, count = networkData?.count)
-        }, status = networkModel.status)
+        return ModelDomain(data = DataDomain(places = networkModel.data?.places?.map { places ->
+            PlacesItemDomain(
+                id = places?.id,
+                address = places?.address,
+                lat = places?.lat,
+                city = places?.city,
+                district = places?.district,
+                name = places?.name,
+                workHours = places?.workHours,
+                categories = places?.categories?.map { },
+                region = places?.region,
+                lng = places?.lat
+            )
+        }, count = networkModel.data?.count), status = networkModel.status)
     }
 
     override suspend fun loadData():ModelDomain {

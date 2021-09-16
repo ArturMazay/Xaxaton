@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-val crane_caption = Color.DarkGray
-val crane_divider_color = Color.LightGray
+val fitness_caption = Color.DarkGray
+val fitness_divider_color = Color.LightGray
 private val crane_red = Color(0xFFE30425)
 private val crane_white = Color.White
 private val crane_purple_700 = Color(0xFF720D5D)
