@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Xaxaton</string>
     <string name="cd_menu">Open Drawer</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

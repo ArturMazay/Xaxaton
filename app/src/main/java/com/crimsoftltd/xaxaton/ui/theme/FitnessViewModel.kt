@@ -1,19 +1,21 @@
 package com.crimsoftltd.xaxaton.ui.theme
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.crimsoftltd.xaxaton.domain.*
+import com.crimsoftltd.xaxaton.map.KEY_ARG_DETAILS_CITY_NAME
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.Result
 import kotlin.random.Random
 
 const val MAX_PEOPLE = 4
 class FitnessViewModel(val iLoadData: ILoadData) : ViewModel() {
-
 
 
 

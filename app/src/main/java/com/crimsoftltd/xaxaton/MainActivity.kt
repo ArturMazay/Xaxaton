@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.core.view.WindowCompat
 import com.crimsoftltd.xaxaton.domain.OnExploreItemClicked
 import com.crimsoftltd.xaxaton.domain.PlacesItemDomain
+import com.crimsoftltd.xaxaton.map.launchDetailsActivity
 import com.crimsoftltd.xaxaton.screens.FitnessHome
 import com.crimsoftltd.xaxaton.screens.LandingScreen
 import com.crimsoftltd.xaxaton.ui.theme.XaxatonTheme
@@ -38,9 +39,9 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private fun launchDetailsActivity(context: MainActivity, item: PlacesItemDomain) {
+/*private fun launchDetailsActivity(context: MainActivity, item: PlacesItemDomain) {
 
-}
+}*/
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
