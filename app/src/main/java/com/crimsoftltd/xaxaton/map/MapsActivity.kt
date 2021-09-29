@@ -79,7 +79,7 @@ fun DetailsScreen(
     viewModel: FitnessViewModel = get()
 ) {
          val vm = viewModel.dataMaps
-  CityMapView(latitude = , longitude = )
+//  CityMapView(latitude = , longitude = )
         //DetailsContent( exploreModel =  , modifier.fillMaxSize())   //сюда данные нужны с вью модели
 
     }
