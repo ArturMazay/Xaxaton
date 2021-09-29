@@ -20,9 +20,13 @@ class FitnessViewModel(val iLoadData: ILoadData) : ViewModel() {
 
 
     val data = liveData(Dispatchers.IO) {
-        val modelList = iLoadData.loadData()
+        try {
+            val modelList = iLoadData.loadData()
+            emit(modelList.data.places)
 
-        emit(modelList.data.places)
+        }catch (e:Exception){
+            emit(e)
+        }
 
     }
 

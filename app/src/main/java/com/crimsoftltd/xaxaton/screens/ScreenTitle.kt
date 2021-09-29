@@ -6,6 +6,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.crimsoftltd.xaxaton.domain.OnExploreItemClicked
+import com.crimsoftltd.xaxaton.domain.PlacesItemDomain
 import com.crimsoftltd.xaxaton.ui.theme.FitnessViewModel
 import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.launch
@@ -74,7 +75,7 @@ fun FitnessHomeContent(
                     suggestedDestinations?.let {places->
                         ExploreSection(
                             title = "Выберети место для тренировки.",
-                            exploreList = places,
+                            exploreList = places as List<PlacesItemDomain>,
                             onItemClicked = onExploreItemClicked
                         )
                     }
@@ -90,7 +91,7 @@ fun FitnessHomeContent(
                     suggestedDestinations?.let {futureList->
                         ExploreSection(
                             title = "Ознакомтесь с недостающими обьектами",
-                            exploreList = futureList,
+                            exploreList = futureList as List<PlacesItemDomain>,
                             onItemClicked = onExploreItemClicked
                         )
                     }

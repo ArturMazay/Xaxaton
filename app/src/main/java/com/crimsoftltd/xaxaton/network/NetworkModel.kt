@@ -1,6 +1,7 @@
 package com.crimsoftltd.xaxaton
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 data class NetworkModel(
     @SerializedName("data")
@@ -17,6 +18,8 @@ data class NetworkData(
 )
 
 data class NetworkPlacesItem(
+    @SerializedName("picture_url")
+    val picture_url:String?=null,
     @SerializedName("address")
     val address: String?=null,
     @SerializedName("lng")

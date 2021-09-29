@@ -2,6 +2,7 @@ package com.crimsoftltd.xaxaton.domain
 
 
 typealias OnExploreItemClicked = (PlacesItemDomain) -> Unit
+
 data class ModelDomain(
     val data: DataDomain,
     val status: String?
@@ -13,6 +14,7 @@ data class DataDomain(
 )
 
 data class PlacesItemDomain(
+   val pictureUrl:String?,
     val address: String?,
     val lng: Double?,
     val city: String?,
@@ -23,7 +25,7 @@ data class PlacesItemDomain(
     val categories: List<Unit>?,
     val region: String?,
     val lat: Double?
-){
+)  {
     val nameToDisplay = "$name, $address"
 
 }

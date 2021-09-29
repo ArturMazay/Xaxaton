@@ -5,6 +5,7 @@ import com.crimsoftltd.xaxaton.network.ILoadDataFromNetwork
 
 class NetworkRepository(val iLoadDataFromNetwork: ILoadDataFromNetwork) : ILoadData {
 
+    var dataForMap:List<PlacesItemDomain> = listOf()
 
     private fun mapData(networkModel: NetworkModel): ModelDomain {
         return ModelDomain(data = DataDomain(places = networkModel.data?.places?.map { places ->
@@ -18,15 +19,26 @@ class NetworkRepository(val iLoadDataFromNetwork: ILoadDataFromNetwork) : ILoadD
                 workHours = places?.workHours,
                 categories = places?.categories?.map { },
                 region = places?.region,
-                lng = places?.lat
+                lng = places?.lat,
+                pictureUrl = places?.picture_url
             )
         }, count = networkModel.data?.count), status = networkModel.status)
     }
 
-    override suspend fun loadData():ModelDomain {
+    override suspend fun loadData(): ModelDomain {
         val response = iLoadDataFromNetwork.loadDataApi()
-        return mapData(response)
+        val data = mapData(response)
+        dataForMap = data.data.places?.toList().orEmpty()
+        return data
     }
+
+
+    override suspend fun loadDataForMap(id: Int): List<PlacesItemDomain> =
+        listOf(dataForMap.first { item->
+            item.id==id
+        })
 }
+
+
 
 
