@@ -11,10 +11,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlin.Result
 import kotlin.random.Random
 
-const val MAX_PEOPLE = 4
+const val FUTBALL = 4
 class FitnessViewModel(val iLoadData: ILoadData) : ViewModel() {
 
 
@@ -28,6 +27,10 @@ class FitnessViewModel(val iLoadData: ILoadData) : ViewModel() {
             emit(e)
         }
 
+    }
+
+    val dataMaps = viewModelScope.launch(Dispatchers.IO) {
+        val dataM = iLoadData.loadDataForMap()
     }
 
    /* fun updatePeople(people: Int) {

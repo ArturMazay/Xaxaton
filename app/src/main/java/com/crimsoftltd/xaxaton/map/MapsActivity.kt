@@ -84,7 +84,7 @@ fun DetailsScreen(
 ) {
     val vm by viewModel.data.observeAsState()
 
-
+  CityMapView(latitude = , longitude = )
         //DetailsContent( exploreModel =  , modifier.fillMaxSize())   //сюда данные нужны с вью модели
 
     }
