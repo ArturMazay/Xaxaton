@@ -8,7 +8,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,9 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.crimsoftltd.xaxaton.domain.PlacesItemDomain
-import com.crimsoftltd.xaxaton.domain.Result
 import com.crimsoftltd.xaxaton.ui.theme.FitnessViewModel
 import com.crimsoftltd.xaxaton.ui.theme.XaxatonTheme
 import com.google.accompanist.insets.navigationBarsPadding
@@ -30,7 +27,6 @@ import com.google.maps.android.ktx.addMarker
 import com.google.maps.android.ktx.awaitMap
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
-import org.koin.core.component.getScopeId
 
 internal const val KEY_ARG_DETAILS_CITY_NAME = "KEY_ARG_DETAILS_CITY_NAME"
 
@@ -82,8 +78,7 @@ fun DetailsScreen(
     modifier: Modifier = Modifier,
     viewModel: FitnessViewModel = get()
 ) {
-    val vm by viewModel.data.observeAsState()
-
+         val vm = viewModel.dataMaps
   CityMapView(latitude = , longitude = )
         //DetailsContent( exploreModel =  , modifier.fillMaxSize())   //сюда данные нужны с вью модели
 

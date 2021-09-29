@@ -1,17 +1,11 @@
 package com.crimsoftltd.xaxaton.ui.theme
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import com.crimsoftltd.xaxaton.domain.*
-import com.crimsoftltd.xaxaton.map.KEY_ARG_DETAILS_CITY_NAME
+import com.crimsoftltd.xaxaton.domain.ILoadData
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlin.random.Random
 
 const val FUTBALL = 4
 class FitnessViewModel(val iLoadData: ILoadData) : ViewModel() {
@@ -30,7 +24,7 @@ class FitnessViewModel(val iLoadData: ILoadData) : ViewModel() {
     }
 
     val dataMaps = viewModelScope.launch(Dispatchers.IO) {
-        val dataM = iLoadData.loadDataForMap()
+        val dataM = iLoadData.loadData()
     }
 
    /* fun updatePeople(people: Int) {
