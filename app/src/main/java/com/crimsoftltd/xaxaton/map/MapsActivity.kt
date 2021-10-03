@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -53,7 +54,7 @@ class MapsActivity : ComponentActivity() {
             XaxatonTheme {
                 Surface {
                     DetailsScreen(
-                       // onErrorLoading = { finish() },
+                      //  onErrorLoading = { finish() },
                         modifier = Modifier
                             .statusBarsPadding()
                             .navigationBarsPadding()
@@ -74,16 +75,13 @@ private data class DetailsScreenUiState(
 
 @Composable
 fun DetailsScreen(
-  //  onErrorLoading: () -> Unit,
+   // onErrorLoading: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: FitnessViewModel = get()
 ) {
-         val vm = viewModel.dataMaps
-  CityMapView(latitude = , longitude = )
-        //DetailsContent( exploreModel =  , modifier.fillMaxSize())   //сюда данные нужны с вью модели
-
-    }
-
+    val vm by viewModel.dataMaps.observeAsState()
+    vm?.let {data-> DetailsContent(data) }
+}
 @Composable
 fun DetailsContent(
     exploreModel: PlacesItemDomain,
@@ -110,9 +108,9 @@ fun DetailsContent(
 
 
 @Composable
-private fun CityMapView(latitude: Double, longitude: Double) {
+private fun CityMapView(latitude: Double?, longitude: Double?) {
     val mapView = rememberMapViewWithLifecycle()
-    MapViewContainer(mapView, latitude, longitude)
+    latitude?.let { longitude?.let { it1 -> MapViewContainer(mapView, it, it1) } }
 }
 
 
@@ -173,6 +171,6 @@ private fun ZoomButton(text: String, onClick: () -> Unit) {
     }
 }
 
-private const val InitialZoom = 5f
+private const val InitialZoom = 8f
 const val MinZoom = 2f
 const val MaxZoom = 20f
