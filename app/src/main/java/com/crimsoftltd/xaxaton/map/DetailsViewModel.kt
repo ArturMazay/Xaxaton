@@ -17,13 +17,13 @@ class DetailsViewModel(
 
     //   private val cityId = savedStateHandle.get<Int>(KEY_ARG_DETAILS_CITY_NAME)
     //val cityid=savedStateHandle.id
-    private val cityName = savedStateHandle.get<Int>(KEY_ARG_DETAILS_CITY_NAME)
+    //private val cityName = savedStateHandle.get<Int>(KEY_ARG_DETAILS_CITY_NAME)
 
-    val cityDetails: LiveData<PlacesItemDomain> = liveData(Dispatchers.Default) {
+    val cityDetails: LiveData<Result<PlacesItemDomain>> = liveData(Dispatchers.Default) {
        try {
            val destinations = destinationsRepository.loadDataForMap(id = 9)
-           emit(destinations)
-          // emit(Result.Success(destinations))
+           //emit(destinations)
+           emit(Result.Success(destinations))
        }catch (e:Exception){
 
        }
