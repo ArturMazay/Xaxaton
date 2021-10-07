@@ -10,7 +10,7 @@ import androidx.compose.runtime.*
 import androidx.core.view.WindowCompat
 import com.crimsoftltd.xaxaton.domain.OnExploreItemClicked
 import com.crimsoftltd.xaxaton.domain.PlacesItemDomain
-import com.crimsoftltd.xaxaton.map.launchDetailsActivity
+import com.crimsoftltd.xaxaton.map.NavigationApp
 import com.crimsoftltd.xaxaton.screens.FitnessHome
 import com.crimsoftltd.xaxaton.screens.LandingScreen
 import com.crimsoftltd.xaxaton.ui.theme.XaxatonTheme
@@ -19,20 +19,22 @@ import com.google.accompanist.insets.ProvideWindowInsets
 
 class MainActivity : ComponentActivity() {
 
+    @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             ProvideWindowInsets {
                 XaxatonTheme {
-                    MainScreen(
+                    NavigationApp()
+                   /* MainScreen(
                         onExploreItemClicked = {
                             launchDetailsActivity(
                                 context = this,
                                 item = it
                             )
                         }
-                    )
+                    )*/
                 }
             }
         }
@@ -51,7 +53,7 @@ fun MainScreen(onExploreItemClicked: OnExploreItemClicked) {
         if (showLandingScreen) {
             LandingScreen(onTimeout = { showLandingScreen = false })
         } else {
-            FitnessHome(onExploreItemClicked = onExploreItemClicked)
+          //  FitnessHome(onExploreItemClicked = onExploreItemClicked,navController = nav)
         }
     }
 }

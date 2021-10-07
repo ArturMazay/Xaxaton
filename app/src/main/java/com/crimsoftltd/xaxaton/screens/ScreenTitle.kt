@@ -5,7 +5,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.crimsoftltd.xaxaton.domain.OnExploreItemClicked
+import androidx.navigation.NavController
 import com.crimsoftltd.xaxaton.domain.PlacesItemDomain
 import com.crimsoftltd.xaxaton.ui.theme.FitnessViewModel
 import com.google.accompanist.insets.statusBarsPadding
@@ -15,44 +15,46 @@ import org.koin.androidx.compose.get
 enum class FitnessScreen {
     Active, Future, Plan
 }
+
 @ExperimentalMaterialApi
 @Composable
 fun FitnessHome(
-    onExploreItemClicked: OnExploreItemClicked,
-    modifier: Modifier = Modifier,
+    navController: NavController,
+    modifier: Modifier = Modifier
 ) {
+
+
     val scaffoldState = rememberScaffoldState()
     Scaffold(
         scaffoldState = scaffoldState,
         modifier = Modifier.statusBarsPadding(),
         drawerContent = {
-          //  FitnessDrawer()
+            //  FitnessDrawer()
         }
     ) {
         val scope = rememberCoroutineScope()
         FitnessHomeContent(
             modifier = modifier,
-            onExploreItemClicked = onExploreItemClicked,
             openDrawer = {
                 scope.launch {
-                   // scaffoldState.drawerState.open()
+                    // scaffoldState.drawerState.open()
                 }
-            }
+            }, navController = navController
         )
     }
 }
+
 @ExperimentalMaterialApi
 @Composable
 fun FitnessHomeContent(
-    onExploreItemClicked: OnExploreItemClicked,
     openDrawer: () -> Unit,
     modifier: Modifier = Modifier,
-    vm: FitnessViewModel = get()
+    vm: FitnessViewModel = get(), navController: NavController
 ) {
 
     val suggestedDestinations by vm.data.observeAsState()
     // val suggestedDestinations by vm.suggestedDestinations.collectAsState()
-   // val onPeopleChanged: (Int) -> Unit = { vm.updatePeople(it) }
+    // val onPeopleChanged: (Int) -> Unit = { vm.updatePeople(it) }
     var tabSelected by remember { mutableStateOf(FitnessScreen.Active) }
 
     BackdropScaffold(
@@ -63,36 +65,35 @@ fun FitnessHomeContent(
             HomeTabBar(openDrawer, tabSelected, onTabSelected = { tabSelected = it })
         },
         backLayerContent = {
-        /*    SearchContent(
-                tabSelected,
-                vm,
-                onPeopleChanged
-            )*/
+            /*    SearchContent(
+                    tabSelected,
+                    vm,
+                    onPeopleChanged
+                )*/
         },
         frontLayerContent = {
             when (tabSelected) {
                 FitnessScreen.Active -> {
-                    suggestedDestinations?.let {places->
+                    suggestedDestinations?.let { places ->
                         ExploreSection(
                             title = "Выберети место для тренировки.",
                             exploreList = places as List<PlacesItemDomain>,
-                            onItemClicked = onExploreItemClicked
+                            navController = navController
                         )
                     }
                 }
                 FitnessScreen.Future -> {
-                 /*     ExploreSection(
-                           title = "Ознакомтесь с недостающими обьектами",
-                           exploreList = vm.future,
-                           onItemClicked = onExploreItemClicked
-                       )*/
+                    /*     ExploreSection(
+                              title = "Ознакомтесь с недостающими обьектами",
+                              exploreList = vm.future,
+                              onItemClicked = onExploreItemClicked
+                          )*/
                 }
                 FitnessScreen.Plan -> {
-                    suggestedDestinations?.let {futureList->
+                    suggestedDestinations?.let { futureList ->
                         ExploreSection(
                             title = "Ознакомтесь с недостающими обьектами",
-                            exploreList = futureList as List<PlacesItemDomain>,
-                            onItemClicked = onExploreItemClicked
+                            exploreList = futureList as List<PlacesItemDomain>,navController = navController
                         )
                     }
                 }
@@ -100,6 +101,7 @@ fun FitnessHomeContent(
         }
     )
 }
+
 @Composable
 fun HomeTabBar(
     openDrawer: () -> Unit,

@@ -16,17 +16,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import com.crimsoftltd.xaxaton.R
-import com.crimsoftltd.xaxaton.domain.OnExploreItemClicked
 import com.crimsoftltd.xaxaton.domain.PlacesItemDomain
+import com.crimsoftltd.xaxaton.map.CityMapView
 import com.crimsoftltd.xaxaton.ui.theme.BottomSheetShape
 import com.crimsoftltd.xaxaton.ui.theme.fitness_caption
 import com.crimsoftltd.xaxaton.ui.theme.fitness_divider_color
 import com.google.accompanist.insets.navigationBarsHeight
 import com.google.accompanist.insets.navigationBarsPadding
+import com.google.gson.Gson
 import kotlinx.coroutines.launch
 
 const val BASE_IMAGE_URL = "http://resivalex.com:5001"
@@ -36,7 +38,7 @@ fun ExploreSection(
     modifier: Modifier = Modifier,
     title: String,
     exploreList: List<PlacesItemDomain>,
-    onItemClicked: OnExploreItemClicked
+    navController: NavController
 ) {
     Surface(modifier = modifier.fillMaxSize(), color = Color.White, shape = BottomSheetShape) {
         Column(modifier = Modifier.padding(start = 24.dp, top = 20.dp, end = 24.dp)) {
@@ -47,7 +49,7 @@ fun ExploreSection(
             Spacer(Modifier.height(8.dp))
             Box(Modifier.weight(1f)) {
                 val listState = rememberLazyListState()
-                ExploreList(exploreList, onItemClicked, listState = listState)
+                ExploreList(exploreList, listState = listState, navController = navController)
                 val showButton by remember {
                     derivedStateOf {
                         listState.firstVisibleItemIndex > 0
@@ -78,7 +80,8 @@ fun ExploreSection(
 @Composable
 private fun ExploreList(
     exploreList: List<PlacesItemDomain>,
-    onItemClicked: OnExploreItemClicked,
+    //onItemClicked: Unit,
+    navController: NavController,
     modifier: Modifier = Modifier,
     listState: LazyListState = rememberLazyListState(),
 ) {
@@ -88,7 +91,8 @@ private fun ExploreList(
                 ExploreItem(
                     modifier = Modifier.fillParentMaxWidth(),
                     item = exploreItem,
-                    onItemClicked = onItemClicked
+                    // onItemClicked = onItemClicked,
+                    navController = navController
                 )
                 Divider(color = fitness_divider_color)
             }
@@ -101,14 +105,19 @@ private fun ExploreList(
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-private fun ExploreItem(
+fun ExploreItem(
     modifier: Modifier = Modifier,
     item: PlacesItemDomain,
-    onItemClicked: OnExploreItemClicked
+    // onItemClicked: Unit
+    navController: NavController
 ) {
+    fun navigateToMap() {
+        val placesItem = Gson().toJson(item)
+        navController.navigate("ScreenMap")
+    }
     Row(
         modifier = modifier
-            .clickable { onItemClicked(item) }
+            .clickable { navigateToMap() }
             .padding(top = 12.dp, bottom = 12.dp)
     ) {
         ExploreImageContainer {
@@ -119,41 +128,40 @@ private fun ExploreItem(
                         crossfade(true)
                     }
                 )
-                Image(
-                    painter = painter,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize(),
-                )
+                Box(){
+                    CityMapView(latitude = 55.078765, longitude =55.078765 )
+                }
 
                 if (painter.state is ImagePainter.State.Loading) {
+
                     Image(
                         painter = painterResource(id = R.drawable.ic_baseline_sports_handball_24),
                         contentDescription = null,
                         modifier = Modifier
-                            .size(36.dp)
+                            .size(46.dp)
                             .align(Alignment.Center),
                     )
                 }
             }
         }
         Spacer(Modifier.width(24.dp))
-        Column {
+        Row {
             Text(
                 text = item.nameToDisplay,
                 style = MaterialTheme.typography.h6
             )
             Spacer(Modifier.height(8.dp))
-            Text(
+           /* Text(
                 text = item.address.toString(), //тут заменить на категорию
                 style = MaterialTheme.typography.caption.copy(color = fitness_caption)
-            )
+            )*/
         }
     }
 }
 
+
 @Composable
-private fun ExploreImageContainer(content: @Composable () -> Unit) {
+ fun ExploreImageContainer(content: @Composable () -> Unit) {
     Surface(Modifier.size(width = 60.dp, height = 60.dp), RoundedCornerShape(4.dp)) {
         content()
     }

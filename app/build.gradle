@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    compileSdk 30
+    compileSdk 31
 
     defaultConfig {
         applicationId "com.crimsoftltd.xaxaton"
@@ -52,6 +52,8 @@ android {
 dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+
+    implementation "androidx.navigation:navigation-compose:2.4.0-alpha10"
 
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     //coil
