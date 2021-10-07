@@ -33,10 +33,9 @@ class NetworkRepository(val iLoadDataFromNetwork: ILoadDataFromNetwork) : ILoadD
     }
 
 
-    override suspend fun loadDataForMap(id: Int): List<PlacesItemDomain> =
-        listOf(dataForMap.first { item->
+    override suspend fun loadDataForMap(id: Int): PlacesItemDomain = dataForMap.first { item->
             item.id==id
-        })
+        }
 }
 
 

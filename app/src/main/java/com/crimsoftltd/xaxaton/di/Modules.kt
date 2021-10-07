@@ -6,7 +6,6 @@ import com.crimsoftltd.xaxaton.domain.ModelDomain
 import com.crimsoftltd.xaxaton.domain.NetworkRepository
 import com.crimsoftltd.xaxaton.domain.PlacesItemDomain
 import com.crimsoftltd.xaxaton.map.DetailsViewModel
-import com.crimsoftltd.xaxaton.map.MapsActivity
 import com.crimsoftltd.xaxaton.network.ILoadDataFromNetwork
 import com.crimsoftltd.xaxaton.ui.theme.FitnessViewModel
 import okhttp3.OkHttpClient
@@ -18,9 +17,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 val viewModel = module {
     viewModel { FitnessViewModel(iLoadData = get()) }
-    viewModel { DetailsViewModel(destinationsRepository = get(),savedStateHandle = get()) }
+   // viewModel { DetailsViewModel(destinationsRepository = get(),savedStateHandle = get()) }
     single { SavedStateHandle() }
-    single { MapsActivity() }
+  //  single { MapsActivity() }
     //factory { PlacesItemDomain(get(),get(),get(),get(),get(),get(),get(),get(),get(),get(),get()) }
 
 }
